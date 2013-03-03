@@ -220,6 +220,8 @@ module PryRemote
            :as => Integer, :default => DefaultPort
         on :w, :wait, "Wait for the pry server to come up",
            :default => false
+        on :i, :interval, "Interval between requests to the pry server (to be use with -w)",
+           :default => 1
         on :c, :capture, "Captures $stdout and $stderr from the server (true)",
            :default => true
         on :f, "Disables loading of .pryrc and its plugins, requires, and command history "
@@ -229,6 +231,7 @@ module PryRemote
 
       @host = params[:server]
       @port = params[:port]
+      @interval = params[:interval]
 
       @wait = params[:wait]
       @capture = params[:capture]
@@ -268,7 +271,7 @@ module PryRemote
         client.output = $stdout
       rescue DRb::DRbConnError => ex
         if wait?
-          sleep 1
+          sleep @interval
           retry
         else
           raise ex
