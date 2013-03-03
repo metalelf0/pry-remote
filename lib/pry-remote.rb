@@ -220,8 +220,8 @@ module PryRemote
            :as => Integer, :default => DefaultPort
         on :w, :wait, "Wait for the pry server to come up",
            :default => false
-        on :i, :interval, "Interval between requests to the pry server (to be use with -w)",
-           :default => 1
+        on :i, :interval=, "Interval between requests to the pry server (to be use with -w)", :argument => :optional,
+           :as => Integer, :default => 1
         on :c, :capture, "Captures $stdout and $stderr from the server (true)",
            :default => true
         on :f, "Disables loading of .pryrc and its plugins, requires, and command history "
